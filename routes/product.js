@@ -35,7 +35,33 @@ router.get("/:id",(req, res)=> {
 });
 
 //Update specific product - put 
+router.put("/:id",(req, res)=> {
 
+    const id = req.params.id;
+
+    product.findByIdAndUpdate(id, req.body)
+    .then(data => {
+        if(!data){
+            res.status(404).send({ message: "Cannot update product with id=" + id + ". Maybe products was not found!"})
+        }else{
+            res.send({ message: "Product was successfully updated."})
+        }
+    })
+    .catch(err => {res.status(500).send({message: "Error while updating product with id=" + id}); })
+});
 //Delete specific product - delete
+router.delete("/:id",(req, res)=> {
 
+    const id = req.params.id;
+
+    product.findByIdAndDelete(id)
+    .then(data => {
+        if(!data){
+            res.status(404).send({ message: "Cannot delete product with id=" + id + ". Maybe products was not found!"})
+        }else{
+            res.send({ message: "Product was successfully deleted."})
+        }
+    })
+    .catch(err => {res.status(500).send({message: "Error while deleting product with id=" + id}); })
+});
 module.exports = router;
