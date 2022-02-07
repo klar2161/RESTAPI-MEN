@@ -28,8 +28,11 @@ mongoose.connection.once('open', () => console.log("Connected succesfully to the
 app.get("/api/welcome",(req, res) => {
     res.status(200).send({message: "Welcome to the MEN REST API"});
 })
-app.use("/api/products",productRoutes);
+
 //post, put, delete -> CRUD
+app.use("/api/products",productRoutes);
+app.use("/api/user", authRoutes);
+
 
 const PORT = process.env.PORT || 4000;
 
