@@ -1,10 +1,11 @@
 const router = require("express").Router();
 const product = require("../models/product");
+const { verifyToken } = require("../validation");
 
 //CRUD operations
 
 //Create product - post 
-router.post("/",(req, res)=> {
+router.post("/", verifyToken, (req, res)=> {
 
     data = req.body;
 
