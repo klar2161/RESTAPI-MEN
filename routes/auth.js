@@ -15,7 +15,7 @@ router.post("/register", async (req, res) => {
         return res.status(400).json({ error: error.details[0].message})
     }
     // check if the email is already registered
-    const emailExist = await user.findOne({email: req.body.email});
+    const emailExist = await User.findOne({email: req.body.email});
 
     if (emailExist) {
         return res.status(400).json({ error: "Email already exists."});
@@ -52,7 +52,7 @@ router.post("/login", async (req, res) => {
         return res.status(400).json({ error: error.details[0].message})
     }
     //if login info is valid, find the user
-    const user = await user.findOne({email: req.body.email});
+    const user = await User.findOne({email: req.body.email});
     //throw error if the email is wrong (user does not exist in the DB)
     if (!user) {
         return res.status(400).json({ error: "Email is wrong or does not exist."});
@@ -65,8 +65,7 @@ router.post("/login", async (req, res) => {
     }
 
     //create authentication token with username and id
-    const token = jwt.sign
-    (
+    const token = jwt.sign(
         //payload
         {
             name: user.name,
@@ -76,14 +75,14 @@ router.post("/login", async (req, res) => {
         //TOKEN_SECRET
         process.env.TOKEN_SECRET,
          //EXPIRATION TIME
-        { expiresIn: process.env.JWT_EXPIRES_IN },
+        { expiresIn: process.env.JWT_EXPIRES_IN }
 
     );
 
     //atach auth token to the header
         res.header("auth-token", token).json({
             error: null, 
-            data: { token}
+            data: { token }
         });
     
 });
