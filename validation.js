@@ -12,7 +12,14 @@ const registerValidation = (data) => {
 }
 
 // validating login
-
+const loginValidation = (data) => {
+    const schema = Joi.object(
+        {
+           email: Joi.string().min(8).max(50).required(),
+            password: Joi.string().min(8).max(200).required()
+        });
+    return schema.validate(data);
+}
 // logic to verify the our token 
 
-module.exports = {registerValidation};
+module.exports = {registerValidation,loginValidation};
