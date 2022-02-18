@@ -51,7 +51,7 @@ router.put("/:id",(req, res)=> {
     .catch(err => {res.status(500).send({message: "Error while updating product with id=" + id}); })
 });
 //Delete specific product - delete
-router.delete("/:id",(req, res)=> {
+router.delete("/:id", verifyToken, (req, res)=> {
 
     const id = req.params.id;
 
